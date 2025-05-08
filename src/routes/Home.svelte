@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Link } from 'svelte-routing';
 import ProductCard from '../components/ProductCard.svelte';
 import TestimonialCard from '../components/TestimonialCard.svelte';
