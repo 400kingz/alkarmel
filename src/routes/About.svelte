@@ -4,7 +4,7 @@ u<script lang="ts">
   // Team members
   const teamMembers = [
     {
-      name: "Ziyad",
+      name: "Abu Adam",
       role: "Founder",
       image: "",
       bio: "Carrying forward his family's legacy from their beloved bakery in Palestine, Abu Adam established Al Karmel to share authentic flavors and traditions with our community."
@@ -16,10 +16,10 @@ u<script lang="ts">
       bio: "Learning the art of baking from his father in their hometown of Ramallah, Abu Saher continues the family tradition of crafting fresh bread daily."
     },
     {
-      name: "Sanad",
+      name: "Abu Mahmoud",
       role: "Master Butcher",
       image: "",
-      bio: "With expertise passed down through generations, Sanad ensures every cut of meat meets our family's high standards of quality and tradition."
+      bio: "With expertise passed down through generations, Abu Mahmoud ensures every cut of meat meets our family's high standards of quality and tradition."
     }
   ];
   
@@ -31,22 +31,22 @@ u<script lang="ts">
       description: "The family's first bakery opens in Ramallah, Palestine, becoming known for its fresh bread and warm hospitality."
     },
     {
-      year: 1995,
+      year: 2014,
       title: "A New Beginning",
       description: "The family brings their culinary traditions to America, dreaming of sharing their heritage with a new community."
     },
     {
-      year: 2005,
+      year: 01-2025,
       title: "Al Karmel Opens Its Doors",
       description: "Building on decades of family expertise, Al Karmel Meat & Bakery opens in Anaheim, continuing our legacy of quality and tradition."
     },
     {
-      year: 2015,
+      year: 02-2025,
       title: "Expanding Our Heritage",
       description: "We expanded our selection to include more traditional products, helping our community stay connected to their roots."
     },
     {
-      year: 2023,
+      year: 03-2025,
       title: "Growing Together",
       description: "Now serving second-generation customers, we continue our family's commitment to authentic flavors and warm hospitality."
     }
