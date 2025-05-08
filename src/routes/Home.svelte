@@ -114,7 +114,7 @@ onMount(() => {
       <img 
         src="/images/family.jpg" 
         alt="Middle Eastern Food" 
-        class="w-full h-full object-cover opacity-60"
+        class="w-full h-full object-cover opacity-90"
       />
       <div class="absolute inset-0 bg-gradient-to-r from-neutral-900 via-neutral-900/70 to-transparent"></div>
     </div>
