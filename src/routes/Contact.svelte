@@ -229,10 +229,10 @@
           <!-- Map -->
           <div class="bg-white rounded-lg shadow-md p-8">
             <h2 class="text-2xl font-bold mb-6 text-neutral-800">Find Us</h2>
-            <!-- Placeholder for a map -->
+            <!-- Google Maps iframe with correct location -->
             <div class="aspect-video rounded-lg bg-neutral-100 flex items-center justify-center">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.3060151517!2d-74.25986762856171!3d40.697149421223625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sus!4v1686667649039!5m2!1sen!2sus" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.9535594444477!2d-117.96179542427764!3d33.759675380196354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dcd7c3f5c1d0c5%3A0x7c8c6f9e3c9c9c9c!2s521%20S%20Brookhurst%20St%2C%20Anaheim%2C%20CA%2092804!5e0!3m2!1sen!2sus!4v1710367774285!5m2!1sen!2sus"
                 width="100%" 
                 height="100%" 
                 style="border:0;" 
