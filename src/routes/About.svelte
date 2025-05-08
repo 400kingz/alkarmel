@@ -1,4 +1,4 @@
-<script lang="ts">
+u<script lang="ts">
   import { onMount } from 'svelte';
   
   // Team members
@@ -13,7 +13,7 @@
       name: "Muwafaq",
       role: "Head Baker",
       image: "",
-      bio: "Learning the art of baking from his father in their hometown of Ramallah, Ahmad continues the family tradition of crafting fresh bread daily."
+      bio: "Learning the art of baking from his father in their hometown of Ramallah, Muwafaq continues the family tradition of crafting fresh bread daily."
     },
     {
       name: "Sanad",
