@@ -1,3 +1,5 @@
+<script>
+import { onMount } from 'svelte';
 import { Link } from 'svelte-routing';
 import ProductCard from '../components/ProductCard.svelte';
 import TestimonialCard from '../components/TestimonialCard.svelte';
@@ -103,6 +105,7 @@ onMount(() => {
     observer.disconnect();
   };
 });
+</script>
 
 <div class="min-h-screen">
   <!-- Hero Section -->
