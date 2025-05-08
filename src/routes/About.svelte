@@ -10,10 +10,10 @@ u<script lang="ts">
       bio: "Carrying forward his family's legacy from their beloved bakery in Palestine, Abu Adam established Al Karmel to share authentic flavors and traditions with our community."
     },
     {
-      name: "Muwafaq",
+      name: "Abu Saher",
       role: "Head Baker",
       image: "",
-      bio: "Learning the art of baking from his father in their hometown of Ramallah, Muwafaq continues the family tradition of crafting fresh bread daily."
+      bio: "Learning the art of baking from his father in their hometown of Ramallah, Abu Saher continues the family tradition of crafting fresh bread daily."
     },
     {
       name: "Sanad",
