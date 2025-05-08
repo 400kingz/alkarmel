@@ -10,7 +10,7 @@
       id: 1,
       name: "Fresh Pita Bread",
       category: "Bakery",
-      image: "/src/assets/images/bakery.jpg",
+      image: "/images/bakery.jpg",
       description: "Freshly baked traditional pita bread, perfect for dipping in hummus or making wraps.",
       price: 3.99
     },
@@ -18,7 +18,7 @@
       id: 2,
       name: "Premium Lamb Cuts",
       category: "Meat",
-      image: "/src/assets/images/meat.jpg",
+      image: "/images/meat.jpg",
       description: "High-quality lamb cuts, perfect for traditional Middle Eastern dishes.",
       price: 15.99
     },
@@ -38,19 +38,19 @@
       id: 1,
       name: "Sarah K.",
       quote: "I've been looking for authentic Middle Eastern ingredients for years, and Al Karmel has everything I need. The bread is always fresh and delicious!",
-      image: "/src/assets/images/amo.jpg"
+      image: "/images/amo.jpg"
     },
     {
       id: 2,
       name: "Ahmed M.",
       quote: "The quality of meat at Al Karmel is exceptional. I always come here for special occasions, and the staff is knowledgeable and friendly.",
-      image: "/src/assets/images/amo.jpg"
+      image: "/images/amo.jpg"
     },
     {
       id: 3,
       name: "Leila T.",
       quote: "Finally found a place that sells authentic Palestinian olive oil! Their selection of Arab groceries brings me back to my childhood.",
-      image: "/src/assets/images/amo.jpg"
+      image: "/images/amo.jpg"
     }
   ];
 
@@ -73,7 +73,7 @@
   <section class="relative h-screen flex items-center text-white bg-neutral-900 overflow-hidden">
     <div class="absolute inset-0 z-0">
       <img 
-        src="/src/assets/images/family.jpg" 
+        src="/images/family.jpg" 
         alt="Middle Eastern Food" 
         class="w-full h-full object-cover opacity-60"
       />
@@ -107,13 +107,13 @@
         <div class="lg:w-1/2">
           <div class="relative">
             <img 
-              src="/src/assets/images/amo.jpg" 
+              src="/images/amo.jpg" 
               alt="Our Store" 
               class="rounded-lg shadow-lg object-cover w-full h-96"
             />
             <div class="absolute -bottom-6 -right-6 hidden md:block">
               <img 
-                src="/src/assets/images/snacks.jpg" 
+                src="/images/snacks.jpg" 
                 alt="Fresh Bread" 
                 class="rounded-lg shadow-lg w-60 h-40 object-cover border-4 border-white"
               />
@@ -184,7 +184,7 @@
         <!-- Bakery Category -->
         <div class="relative group overflow-hidden rounded-lg shadow-lg h-80">
           <img 
-            src="/src/assets/images/bakery.jpg" 
+            src="/images/bakery.jpg" 
             alt="Fresh Bakery" 
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
@@ -201,7 +201,7 @@
         <!-- Meat Category -->
         <div class="relative group overflow-hidden rounded-lg shadow-lg h-80">
           <img 
-            src="/src/assets/images/meat.jpg" 
+            src="/images/meat.jpg" 
             alt="Quality Meats" 
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
@@ -218,7 +218,7 @@
         <!-- Essentials Category -->
         <div class="relative group overflow-hidden rounded-lg shadow-lg h-80">
           <img 
-            src="/src/assets/images/fruit.jpg" 
+            src="/images/fruit.jpg" 
             alt="Arab Essentials" 
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />

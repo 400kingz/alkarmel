@@ -35,7 +35,7 @@
       <!-- Logo -->
       <div class="flex items-center">
         <Link to="/" class="flex items-center">
-          <img src="src/assets/images/al karmel transparent.png" alt="Al Karmel" class="h-10 w-10 rounded-full object-cover mr-3">
+          <img src="/images/al karmel transparent.png" alt="Al Karmel" class="h-10 w-10 rounded-full object-cover mr-3">
           <span class={`font-heading font-bold text-xl ${scrolled ? 'text-primary-700' : 'text-primary-500'}`}>
             Al Karmel
           </span>
