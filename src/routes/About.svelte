@@ -4,22 +4,22 @@
   // Team members
   const teamMembers = [
     {
-      name: "Abu Ahmad",
+      name: "Ziyad",
       role: "Founder",
       image: "",
-      bio: "Carrying forward his family's legacy from their beloved bakery in Palestine, Abu Ahmad established Al Karmel to share authentic flavors and traditions with our community."
+      bio: "Carrying forward his family's legacy from their beloved bakery in Palestine, Abu Adam established Al Karmel to share authentic flavors and traditions with our community."
     },
     {
-      name: "Ahmad",
+      name: "Muwafaq",
       role: "Head Baker",
       image: "",
       bio: "Learning the art of baking from his father in their hometown of Ramallah, Ahmad continues the family tradition of crafting fresh bread daily."
     },
     {
-      name: "Mohammed",
+      name: "Sanad",
       role: "Master Butcher",
       image: "",
-      bio: "With expertise passed down through generations, Mohammed ensures every cut of meat meets our family's high standards of quality and tradition."
+      bio: "With expertise passed down through generations, Sanad ensures every cut of meat meets our family's high standards of quality and tradition."
     }
   ];
   
