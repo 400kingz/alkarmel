@@ -36,17 +36,17 @@ u<script lang="ts">
       description: "The family brings their culinary traditions to America, dreaming of sharing their heritage with a new community."
     },
     {
-      year: 01-2025,
+      year: 012025,
       title: "Al Karmel Opens Its Doors",
       description: "Building on decades of family expertise, Al Karmel Meat & Bakery opens in Anaheim, continuing our legacy of quality and tradition."
     },
     {
-      year: 02-2025,
+      year: 022025,
       title: "Expanding Our Heritage",
       description: "We expanded our selection to include more traditional products, helping our community stay connected to their roots."
     },
     {
-      year: 03-2025,
+      year: 032025,
       title: "Growing Together",
       description: "Now serving second-generation customers, we continue our family's commitment to authentic flavors and warm hospitality."
     }
