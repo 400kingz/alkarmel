@@ -2,10 +2,13 @@
   import { Link, navigate } from "svelte-routing";
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
+  import { supabase } from "../lib/supabase";
   
   let scrolled = false;
   let mobileMenuOpen = false;
   let isAdmin = false;
+  let user: any = null;
+  let profileDropdownOpen = false;
   
   // Toggle mobile menu visibility
   function toggleMobileMenu() {
@@ -21,10 +24,25 @@
   function handleScroll() {
     scrolled = window.scrollY > 50;
   }
+
+  async function handleSignOut() {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      localStorage.removeItem('isAdmin');
+      navigate('/login');
+    } catch (err) {
+      console.error('Sign out error:', err);
+    }
+  }
   
-  onMount(() => {
+  onMount(async () => {
     window.addEventListener('scroll', handleScroll);
     isAdmin = localStorage.getItem('isAdmin') === 'true';
+    
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    user = currentUser;
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -54,9 +72,46 @@
         <Link to="/contact" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Contact</Link>
         {#if isAdmin}
           <Link to="/admin" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Admin</Link>
+        {/if}
+        
+        {#if user}
+          <!-- Profile Dropdown -->
+          <div class="relative">
+            <button 
+              class={`flex items-center space-x-1 font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}
+              on:click={() => profileDropdownOpen = !profileDropdownOpen}
+            >
+              <span>Profile</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            
+            {#if profileDropdownOpen}
+              <div 
+                class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1"
+                transition:slide={{ duration: 200 }}
+              >
+                <Link 
+                  to="/profile" 
+                  class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100"
+                  on:click={() => profileDropdownOpen = false}
+                >
+                  View Profile
+                </Link>
+                <button 
+                  class="block w-full text-left px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100"
+                  on:click={handleSignOut}
+                >
+                  Sign Out
+                </button>
+              </div>
+            {/if}
+          </div>
         {:else}
           <Link to="/login" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Login</Link>
         {/if}
+        
         <button class="btn btn-primary ml-4">Order Now</button>
       </nav>
       
@@ -126,6 +181,25 @@
             >
               Admin
             </Link>
+          {/if}
+          
+          {#if user}
+            <Link 
+              to="/profile" 
+              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
+              on:click={closeMenu}
+            >
+              Profile
+            </Link>
+            <button 
+              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600 text-left w-full"
+              on:click={() => {
+                handleSignOut();
+                closeMenu();
+              }}
+            >
+              Sign Out
+            </button>
           {:else}
             <Link 
               to="/login" 
@@ -135,6 +209,7 @@
               Login
             </Link>
           {/if}
+          
           <button class="btn btn-primary w-full">Order Now</button>
         </div>
       </nav>

@@ -4,39 +4,51 @@
   
   let email = '';
   let password = '';
+  let confirmPassword = '';
   let error = '';
   let loading = false;
+  let isSignUp = false;
   
-  async function handleLogin() {
+  async function handleAuth() {
     loading = true;
     error = '';
     
     try {
-      const { data: { user }, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
+      if (isSignUp) {
+        if (password !== confirmPassword) {
+          throw new Error('Passwords do not match');
+        }
+        
+        const { data: { user }, error: signUpError } = await supabase.auth.signUp({
+          email,
+          password
+        });
 
-      if (signInError) throw signInError;
-
-      if (!user) throw new Error('No user returned from login');
-
-      // Check if user is admin
-      const { data: adminData } = await supabase
-        .from('admins')
-        .select('user_id')
-        .eq('user_id', user.id)
-        .single();
-
-      if (adminData) {
-        localStorage.setItem('isAdmin', 'true');
-        navigate('/admin');
-      } else {
-        localStorage.setItem('isAdmin', 'false');
+        if (signUpError) throw signUpError;
+        if (!user) throw new Error('No user returned from signup');
+        
         navigate('/');
+      } else {
+        const { data: { user }, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (signInError) throw signInError;
+        if (!user) throw new Error('No user returned from login');
+
+        // Check if user is admin
+        const { data: adminData } = await supabase
+          .from('admins')
+          .select('user_id')
+          .eq('user_id', user.id)
+          .single();
+
+        localStorage.setItem('isAdmin', adminData ? 'true' : 'false');
+        navigate(adminData ? '/admin' : '/');
       }
     } catch (err) {
-      console.error('Login error:', err);
+      console.error('Auth error:', err);
       error = err.message;
     } finally {
       loading = false;
@@ -47,13 +59,24 @@
 <div class="min-h-screen bg-neutral-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
     <div>
-      <h2 class="mt-6 text-center text-3xl font-bold text-neutral-900">Sign in to your account</h2>
+      <h2 class="mt-6 text-center text-3xl font-bold text-neutral-900">
+        {isSignUp ? 'Create an account' : 'Sign in to your account'}
+      </h2>
       <p class="mt-2 text-center text-sm text-neutral-600">
-        Access your profile and manage your orders
+        {isSignUp ? 'Already have an account?' : "Don't have an account?"} 
+        <button 
+          class="font-medium text-primary-600 hover:text-primary-500"
+          on:click={() => {
+            isSignUp = !isSignUp;
+            error = '';
+          }}
+        >
+          {isSignUp ? 'Sign in' : 'Sign up'}
+        </button>
       </p>
     </div>
     
-    <form class="mt-8 space-y-6" on:submit|preventDefault={handleLogin}>
+    <form class="mt-8 space-y-6" on:submit|preventDefault={handleAuth}>
       {#if error}
         <div class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
           {error}
@@ -69,10 +92,11 @@
             type="email"
             required
             bind:value={email}
-            class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-300 placeholder-neutral-500 text-neutral-900 focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
+            class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-300 placeholder-neutral-500 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
             placeholder="Email address"
           />
         </div>
+        
         <div>
           <label for="password" class="sr-only">Password</label>
           <input
@@ -81,10 +105,25 @@
             type="password"
             required
             bind:value={password}
-            class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-300 placeholder-neutral-500 text-neutral-900 focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
+            class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-300 placeholder-neutral-500 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
             placeholder="Password"
           />
         </div>
+
+        {#if isSignUp}
+          <div>
+            <label for="confirmPassword" class="sr-only">Confirm Password</label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              required
+              bind:value={confirmPassword}
+              class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-300 placeholder-neutral-500 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
+              placeholder="Confirm Password"
+            />
+          </div>
+        {/if}
       </div>
 
       <div>
@@ -100,9 +139,9 @@
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
             </span>
-            Signing in...
+            {isSignUp ? 'Creating account...' : 'Signing in...'}
           {:else}
-            Sign in
+            {isSignUp ? 'Create Account' : 'Sign in'}
           {/if}
         </button>
       </div>

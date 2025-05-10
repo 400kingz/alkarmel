@@ -9,6 +9,7 @@
   import Gallery from "./routes/Gallery.svelte";
   import Admin from "./routes/Admin.svelte";
   import Login from "./routes/Login.svelte";
+  import Profile from "./routes/Profile.svelte";
 
   export let url = "";
 </script>
@@ -24,6 +25,7 @@
       <Route path="/gallery" component={Gallery} />
       <Route path="/admin" component={Admin} />
       <Route path="/login" component={Login} />
+      <Route path="/profile" component={Profile} />
     </main>
     <Footer />
   </div>
