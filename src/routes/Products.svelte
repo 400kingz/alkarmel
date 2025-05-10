@@ -26,15 +26,24 @@
   async function fetchProducts() {
     try {
       loading = true;
-      const { data, error: fetchError } = await supabase
+      let query = supabase
         .from('products')
         .select('*')
         .is('deleted_at', null);
         
+      if (activeCategory !== 'all') {
+        query = query.eq('category', activeCategory);
+      }
+      
+      if (searchQuery) {
+        query = query.or(`name.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`);
+      }
+      
+      const { data, error: fetchError } = await query;
+        
       if (fetchError) throw fetchError;
       
-      products = data;
-      filterProducts();
+      filteredProducts = data;
     } catch (err) {
       error = err.message;
     } finally {
@@ -42,30 +51,13 @@
     }
   }
   
-  // Filter products by category and search query
-  function filterProducts() {
-    if (activeCategory === 'all' && !searchQuery) {
-      filteredProducts = [...products];
-      return;
-    }
-    
-    filteredProducts = products.filter(product => {
-      const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
-      const matchesSearch = !searchQuery || 
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        product.description.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      return matchesCategory && matchesSearch;
-    });
-  }
-  
   function setCategory(categoryId: string) {
     activeCategory = categoryId;
-    filterProducts();
+    fetchProducts();
   }
   
   function handleSearch() {
-    filterProducts();
+    fetchProducts();
   }
   
   onMount(() => {
@@ -139,7 +131,7 @@
               on:click={() => {
                 activeCategory = 'all';
                 searchQuery = '';
-                filterProducts();
+                fetchProducts();
               }}
             >
               Clear Filters
