@@ -2,7 +2,7 @@
   import { navigate } from "svelte-routing";
   import { supabase } from "../lib/supabase";
   
-  let username = '';
+  let email = '';
   let password = '';
   let error = '';
   let loading = false;
@@ -12,16 +12,31 @@
     error = '';
     
     try {
-      // For now, implement simple admin check
-      if (username === 'admin' && password === 'admin') {
-        // Store admin status in localStorage
+      const { data: { user }, error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (signInError) throw signInError;
+
+      if (!user) throw new Error('No user returned from login');
+
+      // Check if user is admin
+      const { data: adminData } = await supabase
+        .from('admins')
+        .select('user_id')
+        .eq('user_id', user.id)
+        .single();
+
+      if (adminData) {
         localStorage.setItem('isAdmin', 'true');
         navigate('/admin');
-        return;
+      } else {
+        localStorage.setItem('isAdmin', 'false');
+        navigate('/');
       }
-      
-      error = 'Invalid credentials';
     } catch (err) {
+      console.error('Login error:', err);
       error = err.message;
     } finally {
       loading = false;
@@ -47,15 +62,15 @@
       
       <div class="rounded-md shadow-sm space-y-4">
         <div>
-          <label for="username" class="sr-only">Username</label>
+          <label for="email" class="sr-only">Email</label>
           <input
-            id="username"
-            name="username"
-            type="text"
+            id="email"
+            name="email"
+            type="email"
             required
-            bind:value={username}
+            bind:value={email}
             class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-300 placeholder-neutral-500 text-neutral-900 focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
-            placeholder="Username"
+            placeholder="Email address"
           />
         </div>
         <div>
