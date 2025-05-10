@@ -54,9 +54,9 @@
   };
 
   onMount(async () => {
-    // Check if user is authenticated and has admin role
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
+    // Check if user is admin
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    if (!isAdmin) {
       navigate('/login');
       return;
     }

@@ -5,6 +5,7 @@
   
   let scrolled = false;
   let mobileMenuOpen = false;
+  let isAdmin = false;
   
   // Toggle mobile menu visibility
   function toggleMobileMenu() {
@@ -23,6 +24,8 @@
   
   onMount(() => {
     window.addEventListener('scroll', handleScroll);
+    isAdmin = localStorage.getItem('isAdmin') === 'true';
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -49,6 +52,11 @@
         <Link to="/gallery" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Gallery</Link>
         <Link to="/about" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>About</Link>
         <Link to="/contact" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Contact</Link>
+        {#if isAdmin}
+          <Link to="/admin" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Admin</Link>
+        {:else}
+          <Link to="/login" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Login</Link>
+        {/if}
         <button class="btn btn-primary ml-4">Order Now</button>
       </nav>
       
@@ -110,6 +118,23 @@
           >
             Contact
           </Link>
+          {#if isAdmin}
+            <Link 
+              to="/admin" 
+              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
+              on:click={closeMenu}
+            >
+              Admin
+            </Link>
+          {:else}
+            <Link 
+              to="/login" 
+              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
+              on:click={closeMenu}
+            >
+              Login
+            </Link>
+          {/if}
           <button class="btn btn-primary w-full">Order Now</button>
         </div>
       </nav>
