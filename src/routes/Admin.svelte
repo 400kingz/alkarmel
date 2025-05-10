@@ -30,6 +30,18 @@
   let loading = true;
   let error = null;
 
+  // Available product categories
+  const categories = [
+    { id: 'Spices', name: 'Spices & Seasonings' },
+    { id: 'Pantry', name: 'Pantry Items' },
+    { id: 'Dairy', name: 'Dairy Products' },
+    { id: 'Bread', name: 'Breads' },
+    { id: 'Meat', name: 'Meats' },
+    { id: 'Sweets', name: 'Sweets & Pastries' },
+    { id: 'Dry Goods', name: 'Dry Goods' },
+    { id: 'Beverages', name: 'Beverages' }
+  ].sort((a, b) => a.name.localeCompare(b.name));
+
   // Form data for new/edit product
   let productForm = {
     name: '',
@@ -39,6 +51,15 @@
     image: '',
     stripe_product_id: '',
     stripe_price_id: ''
+  };
+
+  // Form validation state
+  let formErrors = {
+    name: '',
+    description: '',
+    price: '',
+    category: '',
+    image: ''
   };
 
   // Sales data for chart
@@ -65,7 +86,8 @@
       // Fetch products
       const { data: productsData, error: productsError } = await supabase
         .from('products')
-        .select('*');
+        .select('*')
+        .is('deleted_at', null);
 
       if (productsError) throw productsError;
       products = productsData;
@@ -73,7 +95,8 @@
       // Fetch orders
       const { data: ordersData, error: ordersError } = await supabase
         .from('orders')
-        .select('*');
+        .select('*')
+        .is('deleted_at', null);
 
       if (ordersError) throw ordersError;
       orders = ordersData;
@@ -85,7 +108,49 @@
     }
   });
 
+  function validateForm() {
+    let isValid = true;
+    formErrors = {
+      name: '',
+      description: '',
+      price: '',
+      category: '',
+      image: ''
+    };
+
+    if (!productForm.name.trim()) {
+      formErrors.name = 'Name is required';
+      isValid = false;
+    }
+
+    if (!productForm.description.trim()) {
+      formErrors.description = 'Description is required';
+      isValid = false;
+    }
+
+    if (!productForm.price || productForm.price <= 0) {
+      formErrors.price = 'Price must be greater than 0';
+      isValid = false;
+    }
+
+    if (!productForm.category) {
+      formErrors.category = 'Category is required';
+      isValid = false;
+    }
+
+    if (!productForm.image.trim()) {
+      formErrors.image = 'Image URL is required';
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
   async function handleProductSubmit() {
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       const { data, error: submitError } = await supabase
         .from('products')
@@ -106,7 +171,8 @@
 
       const { data: refreshedProducts } = await supabase
         .from('products')
-        .select('*');
+        .select('*')
+        .is('deleted_at', null);
       products = refreshedProducts;
 
     } catch (err) {
@@ -120,7 +186,7 @@
     try {
       const { error: deleteError } = await supabase
         .from('products')
-        .delete()
+        .update({ deleted_at: new Date().toISOString() })
         .eq('id', id);
 
       if (deleteError) throw deleteError;
@@ -186,7 +252,7 @@
                 <div class="bg-white p-6 rounded-lg shadow border">
                   <h3 class="text-lg font-semibold text-neutral-800">Revenue</h3>
                   <p class="text-3xl font-bold text-primary-600">
-                    ${orders.reduce((sum, order) => sum + order.total, 0).toFixed(2)}
+                    ${orders.reduce((sum, order) => sum + order.total_amount, 0).toFixed(2)}
                   </p>
                 </div>
               </div>
@@ -214,15 +280,25 @@
                         class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                         required
                       />
+                      {#if formErrors.name}
+                        <p class="mt-1 text-sm text-red-600">{formErrors.name}</p>
+                      {/if}
                     </div>
                     <div>
                       <label class="block text-sm font-medium text-neutral-700">Category</label>
-                      <input
-                        type="text"
+                      <select
                         bind:value={productForm.category}
                         class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                         required
-                      />
+                      >
+                        <option value="">Select a category</option>
+                        {#each categories as category}
+                          <option value={category.id}>{category.name}</option>
+                        {/each}
+                      </select>
+                      {#if formErrors.category}
+                        <p class="mt-1 text-sm text-red-600">{formErrors.category}</p>
+                      {/if}
                     </div>
                     <div>
                       <label class="block text-sm font-medium text-neutral-700">Price</label>
@@ -233,6 +309,9 @@
                         class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                         required
                       />
+                      {#if formErrors.price}
+                        <p class="mt-1 text-sm text-red-600">{formErrors.price}</p>
+                      {/if}
                     </div>
                     <div>
                       <label class="block text-sm font-medium text-neutral-700">Image URL</label>
@@ -242,6 +321,9 @@
                         class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                         required
                       />
+                      {#if formErrors.image}
+                        <p class="mt-1 text-sm text-red-600">{formErrors.image}</p>
+                      {/if}
                     </div>
                   </div>
                   <div>
@@ -252,6 +334,9 @@
                       class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                       required
                     ></textarea>
+                    {#if formErrors.description}
+                      <p class="mt-1 text-sm text-red-600">{formErrors.description}</p>
+                    {/if}
                   </div>
                   <button type="submit" class="btn btn-primary">Add Product</button>
                 </form>
@@ -329,7 +414,7 @@
                         <div class="text-sm text-neutral-900">{order.id}</div>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-neutral-900">{order.customer_email}</div>
+                        <div class="text-sm text-neutral-900">{order.user_id}</div>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-neutral-900">
@@ -345,7 +430,7 @@
                         </span>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-neutral-900">${order.total.toFixed(2)}</div>
+                        <div class="text-sm text-neutral-900">${order.total_amount.toFixed(2)}</div>
                       </td>
                     </tr>
                   {/each}
