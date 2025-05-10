@@ -7,6 +7,7 @@
   import About from "./routes/About.svelte";
   import Contact from "./routes/Contact.svelte";
   import Gallery from "./routes/Gallery.svelte";
+  import Admin from "./routes/Admin.svelte";
 
   export let url = "";
 </script>
@@ -20,6 +21,7 @@
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
       <Route path="/gallery" component={Gallery} />
+      <Route path="/admin" component={Admin} />
     </main>
     <Footer />
   </div>
