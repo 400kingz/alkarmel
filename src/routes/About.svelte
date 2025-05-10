@@ -4,22 +4,22 @@
   // Team members
   const teamMembers = [
     {
-      name: "Abu Adam",
-      role: "Founder",
+      name: "Ziyad",
+      role: "Head Chef & Recipe Master",
       image: "",
-      bio: "Carrying forward his family's legacy from their beloved bakery in Palestine, Abu Adam established Al Karmel to share authentic flavors and traditions with our community."
+      bio: "With an innate understanding of flavors and spices, Ziyad crafts the heartwarming recipes that have been passed down through generations, ensuring every dish tells our family's story."
     },
     {
-      name: "Abu Saher",
-      role: "Head Baker",
+      name: "Sanad",
+      role: "Hospitality Director",
       image: "",
-      bio: "Learning the art of baking from his father in their hometown of Ramallah, Abu Saher continues the family tradition of crafting fresh bread daily."
+      bio: "As the master of hospitality, Sanad ensures that every guest feels like a welcome member of the Al Karmel family, creating an atmosphere of warmth and belonging."
     },
     {
-      name: "Abu Mahmoud",
-      role: "Master Butcher",
+      name: "Mwafaq",
+      role: "Quality & Operations",
       image: "",
-      bio: "With expertise passed down through generations, Abu Mahmoud ensures every cut of meat meets our family's high standards of quality and tradition."
+      bio: "With meticulous attention to detail, Mwafaq sources the freshest ingredients and oversees kitchen operations to maintain the highest standards of quality in every dish we serve."
     }
   ];
   
@@ -27,28 +27,23 @@
   const timeline = [
     {
       year: 1975,
-      title: "Our Roots in Palestine",
-      description: "The family's first bakery opens in Ramallah, Palestine, becoming known for its fresh bread and warm hospitality."
+      title: "Our Culinary Heritage",
+      description: "Our family's culinary journey begins in the heart of Palestine, where traditional recipes and cooking techniques were passed down through generations."
     },
     {
       year: 2014,
       title: "A New Beginning",
-      description: "The family brings their culinary traditions to America, dreaming of sharing their heritage with a new community."
+      description: "Our family brings their culinary dreams to America, carrying with them the authentic flavors and traditions of our homeland."
     },
     {
-      year: 12025,
+      year: 2025,
       title: "Al Karmel Opens Its Doors",
-      description: "Building on decades of family expertise, Al Karmel Meat & Bakery opens in Anaheim, continuing our legacy of quality and tradition."
+      description: "Three brothers - Ziyad, Sanad, and Mwafaq - unite to establish Al Karmel, bringing authentic home-style Middle Eastern cuisine to our community."
     },
     {
-      year: 22025,
-      title: "Expanding Our Heritage",
-      description: "We expanded our selection to include more traditional products, helping our community stay connected to their roots."
-    },
-    {
-      year: 32025,
+      year: 2025,
       title: "Growing Together",
-      description: "Now serving second-generation customers, we continue our family's commitment to authentic flavors and warm hospitality."
+      description: "We continue to expand our menu while staying true to our family recipes, creating a welcoming space where every guest feels at home."
     }
   ];
   
@@ -65,7 +60,7 @@
   <section class="relative bg-neutral-900 text-white">
     <div class="relative h-96">
       <img 
-        src="https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+        src="https://images.pexels.com/photos/3850838/pexels-photo-3850838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
         alt="Al Karmel Market" 
         class="absolute inset-0 w-full h-full object-cover opacity-40"
       />
@@ -73,39 +68,42 @@
       <div class="container mx-auto px-4 relative h-full flex items-center">
         <div>
           <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Family Story</h1>
-          <p class="text-xl max-w-2xl text-neutral-200">From our family's bakery in Palestine to your table in America, we bring generations of tradition and authentic flavors to our community.</p>
+          <p class="text-xl max-w-2xl text-neutral-200">From our family's kitchen to your table, we bring generations of tradition and authentic flavors to our community.</p>
         </div>
       </div>
     </div>
   </section>
   
-  <!-- Our Mission -->
+  <!-- Our Story -->
   <section class="py-16">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row gap-12 items-center">
         <div class="md:w-1/2">
-          <h2 class="section-title">Our Mission</h2>
-          <p class="mb-4 text-neutral-700">
-            At Al Karmel Meat & Bakery, we carry forward a legacy that began generations ago in our family's bakery in Ramallah, Palestine. Our mission is to share the authentic tastes and traditions that have been passed down through our family for decades.
-          </p>
-          <p class="mb-4 text-neutral-700">
-            Every loaf of bread we bake and every cut of meat we prepare is a continuation of the recipes and techniques our family has perfected over generations. We believe that food is more than sustenance—it's a bridge that connects our community to their heritage.
-          </p>
-          <p class="text-neutral-700">
-            Just as our family's bakery in Palestine was a gathering place for the community, Al Karmel strives to be a home away from home, where the aromas and flavors transport you back to the warm hospitality of the Middle East.
-          </p>
-        </div>
-        <div class="md:w-1/2">
           <div class="relative">
             <img 
-              src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-              alt="Our Store" 
+              src="https://images.pexels.com/photos/6287295/pexels-photo-6287295.jpeg" 
+              alt="The Al Karmel Brothers" 
               class="rounded-lg shadow-lg w-full object-cover"
             />
             <div class="absolute top-4 right-4 bg-primary-500 text-white px-6 py-3 rounded-full shadow-lg transform rotate-6">
-              <span class="font-bold">Family Owned Since 1975</span>
+              <span class="font-bold">Est. 2025</span>
             </div>
           </div>
+        </div>
+        <div class="md:w-1/2">
+          <h2 class="section-title">Our Story</h2>
+          <p class="mb-6 text-neutral-700">
+            In early 2025, three brothers, Ziyad, Sanad, and Mwafaq, embarked on a shared journey fueled by a singular vision: to bring the authentic, home-style cooking of their heritage to their community. Al Karmel is more than just a restaurant; it's a taste of home, a celebration of family bonds, and a tribute to their rich culinary traditions.
+          </p>
+          <p class="mb-6 text-neutral-700">
+            Each brother brings a unique set of skills and passions to Al Karmel. Ziyad, with his innate understanding of flavors and spices, crafts the heartwarming recipes that have been passed down through generations. Sanad, the master of hospitality, ensures that every guest feels like a welcome member of the Al Karmel family. Mwafaq, with his meticulous attention to detail, sources the freshest ingredients and oversees the kitchen to maintain the highest standards of quality.
+          </p>
+          <p class="mb-6 text-neutral-700">
+            Our family recipes and traditions are the soul of Al Karmel. From the fragrant spices that fill the air to the time-honored techniques used in every dish, we strive to recreate the warmth and comfort of a home-cooked meal. We are committed to providing a welcoming atmosphere where you can gather with loved ones and savor the true taste of home.
+          </p>
+          <p class="text-neutral-700">
+            As we embarked on this fresh start in 2025, we knew that we wanted to honor our heritage while creating a space where everyone feels like family. At Al Karmel, you're not just a customer; you're a cherished guest, invited to share in our family's culinary legacy.
+          </p>
         </div>
       </div>
     </div>
@@ -126,7 +124,7 @@
           </div>
           <h3 class="text-xl font-bold text-center mb-3">Family Tradition</h3>
           <p class="text-neutral-700 text-center">
-            We preserve and share the authentic recipes and techniques passed down through generations of our family in Palestine.
+            We preserve and share the authentic recipes and techniques passed down through generations of our family.
           </p>
         </div>
         
@@ -139,7 +137,7 @@
           </div>
           <h3 class="text-xl font-bold text-center mb-3">Quality</h3>
           <p class="text-neutral-700 text-center">
-            Just like our family's bakery in Palestine, we maintain the highest standards in every product we offer.
+            We maintain the highest standards in every dish we serve, using only the freshest and finest ingredients.
           </p>
         </div>
         
@@ -152,7 +150,7 @@
           </div>
           <h3 class="text-xl font-bold text-center mb-3">Family & Community</h3>
           <p class="text-neutral-700 text-center">
-            We treat every customer as family, creating a warm and welcoming space that reminds them of home.
+            We treat every guest as family, creating a warm and welcoming space that reminds them of home.
           </p>
         </div>
       </div>
@@ -199,7 +197,7 @@
         {#each teamMembers as member, index}
           <div class={`card text-center ${animate ? 'animate-fade-in' : ''}`} style={`animation-delay: ${index * 0.2}s`}>
             <img 
-              src={member.image} 
+              src={member.image || "https://images.pexels.com/photos/3814446/pexels-photo-3814446.jpeg"} 
               alt={member.name} 
               class="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
             />
@@ -217,7 +215,7 @@
     <div class="container mx-auto px-4 text-center">
       <h2 class="text-3xl font-bold mb-6">Experience Our Family's Tradition</h2>
       <p class="max-w-2xl mx-auto mb-8">
-        Visit Al Karmel today and discover why our family's commitment to quality and tradition has made us a trusted part of the community for generations.
+        Visit Al Karmel today and discover why our family's commitment to quality and tradition has made us a cherished part of the community.
       </p>
       <a href="/contact" class="btn bg-white text-primary-700 hover:bg-neutral-100">Visit Us Today</a>
     </div>
