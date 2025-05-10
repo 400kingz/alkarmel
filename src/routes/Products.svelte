@@ -19,18 +19,19 @@
   let activeCategory = 'all';
   let searchQuery = '';
   let products = [];
-  let filteredProducts = [];
   let loading = true;
   let error = null;
   
   async function fetchProducts() {
     try {
       loading = true;
+      error = null;
+      
       let query = supabase
         .from('products')
         .select('*')
         .is('deleted_at', null);
-        
+      
       if (activeCategory !== 'all') {
         query = query.eq('category', activeCategory);
       }
@@ -40,11 +41,15 @@
       }
       
       const { data, error: fetchError } = await query;
-        
-      if (fetchError) throw fetchError;
       
-      filteredProducts = data;
+      if (fetchError) {
+        throw fetchError;
+      }
+      
+      products = data || [];
+      
     } catch (err) {
+      console.error('Error fetching products:', err);
       error = err.message;
     } finally {
       loading = false;
@@ -119,8 +124,8 @@
       </div>
     {:else}
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {#if filteredProducts.length > 0}
-          {#each filteredProducts as product}
+        {#if products.length > 0}
+          {#each products as product}
             <ProductCard {product} />
           {/each}
         {:else}
