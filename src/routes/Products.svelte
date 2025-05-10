@@ -1,129 +1,55 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import ProductCard from '../components/ProductCard.svelte';
+  import { supabase } from '../lib/supabase';
   
   // Product categories
   const categories = [
     { id: 'all', name: 'All Products' },
-    { id: 'bakery', name: 'Bakery' },
-    { id: 'meat', name: 'Meat' },
-    { id: 'essentials', name: 'Arab Essentials' },
-    { id: 'oils', name: 'Olive Oils' },
-    { id: 'spices', name: 'Spices & Herbs' }
-  ];
-  
-  // Sample products data
-  const allProducts = [
-    {
-      id: 1,
-      name: "Fresh Pita Bread",
-      category: "bakery",
-      image: "https://images.pexels.com/photos/461060/pexels-photo-461060.jpeg",
-      description: "Freshly baked traditional pita bread, perfect for dipping in hummus or making wraps.",
-      price: 3.99
-    },
-    {
-      id: 2,
-      name: "Za'atar Manakeesh",
-      category: "bakery",
-      image: "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg",
-      description: "Traditional flatbread topped with olive oil and za'atar spice blend.",
-      price: 4.99
-    },
-    {
-      id: 3,
-      name: "Sesame Kaak",
-      category: "bakery",
-      image: "https://images.pexels.com/photos/2067396/pexels-photo-2067396.jpeg",
-      description: "Crunchy sesame bread rings, a popular Middle Eastern snack.",
-      price: 5.99
-    },
-    {
-      id: 4,
-      name: "Premium Lamb Cuts",
-      category: "meat",
-      image: "https://images.pexels.com/photos/6287295/pexels-photo-6287295.jpeg",
-      description: "High-quality lamb cuts, perfect for traditional Middle Eastern dishes.",
-      price: 15.99
-    },
-    {
-      id: 5,
-      name: "Beef Kebab Meat",
-      category: "meat",
-      image: "https://images.pexels.com/photos/6941026/pexels-photo-6941026.jpeg",
-      description: "Premium ground beef seasoned for perfect kebabs every time.",
-      price: 12.99
-    },
-    {
-      id: 6,
-      name: "Chicken Shawarma Meat",
-      category: "meat",
-      image: "https://images.pexels.com/photos/6941028/pexels-photo-6941028.jpeg",
-      description: "Marinated chicken slices ready for your shawarma sandwiches.",
-      price: 10.99
-    },
-    {
-      id: 7,
-      name: "Palestinian Olive Oil",
-      category: "oils",
-      image: "https://images.pexels.com/photos/33783/olive-oil-salad-dressing-cooking-olive.jpg",
-      description: "Authentic extra virgin olive oil imported directly from Palestinian olive groves.",
-      price: 19.99
-    },
-    {
-      id: 8,
-      name: "Premium Tahini",
-      category: "essentials",
-      image: "https://images.pexels.com/photos/7474327/pexels-photo-7474327.jpeg",
-      description: "Rich and creamy tahini paste made from 100% sesame seeds.",
-      price: 7.99
-    },
-    {
-      id: 9,
-      name: "Authentic Hummus",
-      category: "essentials",
-      image: "https://images.pexels.com/photos/1618898/pexels-photo-1618898.jpeg",
-      description: "Creamy chickpea dip made with traditional ingredients.",
-      price: 5.99
-    },
-    {
-      id: 10,
-      name: "Za'atar Spice Blend",
-      category: "spices",
-      image: "https://images.pexels.com/photos/4198943/pexels-photo-4198943.jpeg",
-      description: "Traditional Middle Eastern spice blend with thyme, sesame, and sumac.",
-      price: 6.99
-    },
-    {
-      id: 11,
-      name: "Organic Sumac",
-      category: "spices",
-      image: "https://images.pexels.com/photos/4226805/pexels-photo-4226805.jpeg",
-      description: "Tangy spice made from ground sumac berries, essential in Middle Eastern cuisine.",
-      price: 8.99
-    },
-    {
-      id: 12,
-      name: "Turkish Coffee",
-      category: "essentials",
-      image: "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg",
-      description: "Finely ground coffee for preparing traditional Turkish coffee.",
-      price: 9.99
-    }
+    { id: 'Spices', name: 'Spices & Seasonings' },
+    { id: 'Pantry', name: 'Pantry Items' },
+    { id: 'Dairy', name: 'Dairy Products' },
+    { id: 'Bread', name: 'Breads' },
+    { id: 'Meat', name: 'Meats' },
+    { id: 'Sweets', name: 'Sweets & Pastries' },
+    { id: 'Dry Goods', name: 'Dry Goods' },
+    { id: 'Beverages', name: 'Beverages' }
   ];
   
   let activeCategory = 'all';
-  let filteredProducts = [...allProducts];
   let searchQuery = '';
+  let products = [];
+  let filteredProducts = [];
+  let loading = true;
+  let error = null;
+  
+  async function fetchProducts() {
+    try {
+      loading = true;
+      const { data, error: fetchError } = await supabase
+        .from('products')
+        .select('*')
+        .is('deleted_at', null);
+        
+      if (fetchError) throw fetchError;
+      
+      products = data;
+      filterProducts();
+    } catch (err) {
+      error = err.message;
+    } finally {
+      loading = false;
+    }
+  }
   
   // Filter products by category and search query
   function filterProducts() {
     if (activeCategory === 'all' && !searchQuery) {
-      filteredProducts = [...allProducts];
+      filteredProducts = [...products];
       return;
     }
     
-    filteredProducts = allProducts.filter(product => {
+    filteredProducts = products.filter(product => {
       const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
       const matchesSearch = !searchQuery || 
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -143,7 +69,7 @@
   }
   
   onMount(() => {
-    filterProducts();
+    fetchProducts();
   });
 </script>
 
@@ -191,26 +117,36 @@
     </div>
     
     <!-- Products Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {#if filteredProducts.length > 0}
-        {#each filteredProducts as product}
-          <ProductCard {product} />
-        {/each}
-      {:else}
-        <div class="col-span-full py-16 text-center">
-          <p class="text-xl text-neutral-500">No products found matching your criteria.</p>
-          <button 
-            class="mt-4 btn btn-primary"
-            on:click={() => {
-              activeCategory = 'all';
-              searchQuery = '';
-              filterProducts();
-            }}
-          >
-            Clear Filters
-          </button>
-        </div>
-      {/if}
-    </div>
+    {#if loading}
+      <div class="flex justify-center items-center h-64">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+      </div>
+    {:else if error}
+      <div class="bg-red-50 text-red-600 p-4 rounded-lg">
+        {error}
+      </div>
+    {:else}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {#if filteredProducts.length > 0}
+          {#each filteredProducts as product}
+            <ProductCard {product} />
+          {/each}
+        {:else}
+          <div class="col-span-full py-16 text-center">
+            <p class="text-xl text-neutral-500">No products found matching your criteria.</p>
+            <button 
+              class="mt-4 btn btn-primary"
+              on:click={() => {
+                activeCategory = 'all';
+                searchQuery = '';
+                filterProducts();
+              }}
+            >
+              Clear Filters
+            </button>
+          </div>
+        {/if}
+      </div>
+    {/if}
   </div>
 </div>
