@@ -27,6 +27,8 @@
       loading = true;
       error = null;
       
+      console.log('Fetching products with category:', activeCategory);
+      
       let query = supabase
         .from('products')
         .select('*')
@@ -43,9 +45,11 @@
       const { data, error: fetchError } = await query;
       
       if (fetchError) {
+        console.error('Supabase query error:', fetchError);
         throw fetchError;
       }
       
+      console.log('Fetched products:', data);
       products = data || [];
       
     } catch (err) {
@@ -57,6 +61,7 @@
   }
   
   function setCategory(categoryId: string) {
+    console.log('Setting category:', categoryId);
     activeCategory = categoryId;
     fetchProducts();
   }
