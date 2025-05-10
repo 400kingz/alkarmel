@@ -70,46 +70,49 @@
     
     <!-- Mobile Navigation -->
     {#if mobileMenuOpen}
-      <div transition:slide={{duration: 300}} class="md:hidden pt-4 pb-2">
-        <nav class="flex flex-col space-y-4">
+      <nav 
+        transition:slide={{duration: 300}} 
+        class="md:hidden bg-white mt-4 py-4 px-2 rounded-lg shadow-lg"
+      >
+        <div class="flex flex-col space-y-4">
           <Link 
             to="/" 
-            class="font-medium py-2 transition-colors duration-200 text-neutral-800 hover:text-primary-500"
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
             on:click={closeMenu}
           >
             Home
           </Link>
           <Link 
             to="/products" 
-            class="font-medium py-2 transition-colors duration-200 text-neutral-800 hover:text-primary-500"
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
             on:click={closeMenu}
           >
             Products
           </Link>
           <Link 
             to="/gallery" 
-            class="font-medium py-2 transition-colors duration-200 text-neutral-800 hover:text-primary-500"
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
             on:click={closeMenu}
           >
             Gallery
           </Link>
           <Link 
             to="/about" 
-            class="font-medium py-2 transition-colors duration-200 text-neutral-800 hover:text-primary-500"
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
             on:click={closeMenu}
           >
             About
           </Link>
           <Link 
             to="/contact" 
-            class="font-medium py-2 transition-colors duration-200 text-neutral-800 hover:text-primary-500"
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
             on:click={closeMenu}
           >
             Contact
           </Link>
           <button class="btn btn-primary w-full">Order Now</button>
-        </nav>
-      </div>
+        </div>
+      </nav>
     {/if}
   </div>
 </header>
