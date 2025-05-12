@@ -64,17 +64,11 @@
       
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-6">
-        {#if $isAdmin}
-          <!-- Admin Navigation -->
-          <Link to="/" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Home</Link>
-        {:else}
-          <!-- Customer Navigation -->
-          <Link to="/" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Home</Link>
-          <Link to="/products" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Products</Link>
-          <Link to="/gallery" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Gallery</Link>
-          <Link to="/about" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>About</Link>
-          <Link to="/contact" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Contact</Link>
-        {/if}
+        <Link to="/" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Home</Link>
+        <Link to="/products" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Products</Link>
+        <Link to="/gallery" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Gallery</Link>
+        <Link to="/about" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>About</Link>
+        <Link to="/contact" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Contact</Link>
         
         {#if user}
           <!-- Profile Dropdown -->
@@ -151,53 +145,41 @@
         class="md:hidden bg-white mt-4 py-4 px-2 rounded-lg shadow-lg"
       >
         <div class="flex flex-col space-y-4">
-          {#if $isAdmin}
-            <!-- Admin Mobile Navigation -->
-            <Link 
-              to="/" 
-              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
-              on:click={closeMenu}
-            >
-              Home
-            </Link>
-          {:else}
-            <!-- Customer Mobile Navigation -->
-            <Link 
-              to="/" 
-              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
-              on:click={closeMenu}
-            >
-              Home
-            </Link>
-            <Link 
-              to="/products" 
-              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
-              on:click={closeMenu}
-            >
-              Products
-            </Link>
-            <Link 
-              to="/gallery" 
-              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
-              on:click={closeMenu}
-            >
-              Gallery
-            </Link>
-            <Link 
-              to="/about" 
-              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
-              on:click={closeMenu}
-            >
-              About
-            </Link>
-            <Link 
-              to="/contact" 
-              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
-              on:click={closeMenu}
-            >
-              Contact
-            </Link>
-          {/if}
+          <Link 
+            to="/" 
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
+            on:click={closeMenu}
+          >
+            Home
+          </Link>
+          <Link 
+            to="/products" 
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
+            on:click={closeMenu}
+          >
+            Products
+          </Link>
+          <Link 
+            to="/gallery" 
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
+            on:click={closeMenu}
+          >
+            Gallery
+          </Link>
+          <Link 
+            to="/about" 
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
+            on:click={closeMenu}
+          >
+            About
+          </Link>
+          <Link 
+            to="/contact" 
+            class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
+            on:click={closeMenu}
+          >
+            Contact
+          </Link>
           
           {#if user}
             {#if $isAdmin}
