@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   import { supabase } from '../../../lib/supabase';
+  import { checkAdminStatus } from '../../../lib/auth';
 
   onMount(async () => {
     try {
@@ -10,15 +11,8 @@
       if (error) throw error;
       
       if (user) {
-        // Check if user is admin
-        const { data: adminData } = await supabase
-          .from('admins')
-          .select('user_id')
-          .eq('user_id', user.id)
-          .single();
-
-        localStorage.setItem('isAdmin', adminData ? 'true' : 'false');
-        navigate(adminData ? '/admin' : '/');
+        const isUserAdmin = await checkAdminStatus(user.id);
+        navigate(isUserAdmin ? '/admin' : '/');
       } else {
         navigate('/login');
       }

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { navigate } from "svelte-routing";
   import { supabase } from '../lib/supabase';
+  import { checkAdminStatus } from '../lib/auth';
   
   let email = '';
   let password = '';
@@ -40,15 +41,8 @@
         if (signInError) throw signInError;
         if (!user) throw new Error('No user returned from login');
 
-        // Check if user is admin
-        const { data: adminData } = await supabase
-          .from('admins')
-          .select('user_id')
-          .eq('user_id', user.id)
-          .single();
-
-        localStorage.setItem('isAdmin', adminData ? 'true' : 'false');
-        navigate(adminData ? '/admin' : '/');
+        const isUserAdmin = await checkAdminStatus(user.id);
+        navigate(isUserAdmin ? '/admin' : '/');
       }
     } catch (err) {
       console.error('Auth error:', err);
