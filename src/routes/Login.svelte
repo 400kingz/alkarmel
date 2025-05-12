@@ -1,7 +1,6 @@
 <script lang="ts">
   import { navigate } from "svelte-routing";
-  import { supabase } from '../lib/supabase';
-  import { checkAdminStatus } from '../lib/auth';
+  import { supabase } from "../lib/supabase";
   
   let email = '';
   let password = '';
@@ -22,10 +21,7 @@
         
         const { data: { user }, error: signUpError } = await supabase.auth.signUp({
           email,
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`
-          }
+          password
         });
 
         if (signUpError) throw signUpError;
@@ -41,46 +37,21 @@
         if (signInError) throw signInError;
         if (!user) throw new Error('No user returned from login');
 
-        const isUserAdmin = await checkAdminStatus(user.id);
-        navigate(isUserAdmin ? '/admin' : '/');
+        // Check if user is admin
+        const { data: adminData } = await supabase
+          .from('admins')
+          .select('user_id')
+          .eq('user_id', user.id)
+          .single();
+
+        localStorage.setItem('isAdmin', adminData ? 'true' : 'false');
+        navigate(adminData ? '/admin' : '/');
       }
     } catch (err) {
       console.error('Auth error:', err);
       error = err.message;
     } finally {
       loading = false;
-    }
-  }
-
-  async function signInWithGoogle() {
-    try {
-      const { data, error: authError } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`
-        }
-      });
-
-      if (authError) throw authError;
-    } catch (err) {
-      console.error('Google auth error:', err);
-      error = err.message;
-    }
-  }
-
-  async function signInWithFacebook() {
-    try {
-      const { data, error: authError } = await supabase.auth.signInWithOAuth({
-        provider: 'facebook',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`
-        }
-      });
-
-      if (authError) throw authError;
-    } catch (err) {
-      console.error('Facebook auth error:', err);
-      error = err.message;
     }
   }
 </script>
@@ -172,44 +143,6 @@
           {:else}
             {isSignUp ? 'Create Account' : 'Sign in'}
           {/if}
-        </button>
-      </div>
-
-      <div class="relative">
-        <div class="absolute inset-0 flex items-center">
-          <div class="w-full border-t border-neutral-300"></div>
-        </div>
-        <div class="relative flex justify-center text-sm">
-          <span class="px-2 bg-neutral-50 text-neutral-500">Or continue with</span>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          on:click={signInWithGoogle}
-          class="w-full inline-flex justify-center py-2 px-4 border border-neutral-300 rounded-md shadow-sm bg-white text-sm font-medium text-neutral-500 hover:bg-neutral-50"
-        >
-          <span class="sr-only">Sign in with Google</span>
-          <svg class="w-5 h-5" viewBox="0 0 24 24">
-            <path
-              fill="currentColor"
-              d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"
-            />
-          </svg>
-        </button>
-
-        <button
-          type="button"
-          on:click={signInWithFacebook}
-          class="w-full inline-flex justify-center py-2 px-4 border border-neutral-300 rounded-md shadow-sm bg-white text-sm font-medium text-neutral-500 hover:bg-neutral-50"
-        >
-          <span class="sr-only">Sign in with Facebook</span>
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-            />
-          </svg>
         </button>
       </div>
     </form>
