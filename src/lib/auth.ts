@@ -9,7 +9,7 @@ export async function checkAdminStatus(userId: string) {
       .from('admins')
       .select('user_id')
       .eq('user_id', userId)
-      .single();
+      .maybeSingle();
       
     if (error) throw error;
     

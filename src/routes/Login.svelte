@@ -28,7 +28,7 @@
         if (signUpError) throw signUpError;
         if (!user) throw new Error('No user returned from signup');
         
-        navigate('/');
+        navigate('/auth/callback');
       } else {
         const { data: { user }, error: signInError } = await supabase.auth.signInWithPassword({
           email,
