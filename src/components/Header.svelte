@@ -66,9 +66,7 @@
       <nav class="hidden md:flex items-center space-x-6">
         {#if $isAdmin}
           <!-- Admin Navigation -->
-          <Link to="/admin" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Dashboard</Link>
-          <Link to="/admin" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Products</Link>
-          <Link to="/admin" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Orders</Link>
+          <Link to="/" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Home</Link>
         {:else}
           <!-- Customer Navigation -->
           <Link to="/" class={`font-medium transition-colors duration-200 ${scrolled ? 'text-neutral-700 hover:text-primary-600' : 'text-neutral-800 hover:text-primary-500'}`}>Home</Link>
@@ -96,6 +94,15 @@
                 class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1"
                 transition:slide={{ duration: 200 }}
               >
+                {#if $isAdmin}
+                  <Link 
+                    to="/admin" 
+                    class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100"
+                    on:click={() => profileDropdownOpen = false}
+                  >
+                    Dashboard
+                  </Link>
+                {/if}
                 <Link 
                   to="/profile" 
                   class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100"
@@ -147,25 +154,11 @@
           {#if $isAdmin}
             <!-- Admin Mobile Navigation -->
             <Link 
-              to="/admin" 
+              to="/" 
               class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
               on:click={closeMenu}
             >
-              Dashboard
-            </Link>
-            <Link 
-              to="/admin" 
-              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
-              on:click={closeMenu}
-            >
-              Products
-            </Link>
-            <Link 
-              to="/admin" 
-              class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
-              on:click={closeMenu}
-            >
-              Orders
+              Home
             </Link>
           {:else}
             <!-- Customer Mobile Navigation -->
@@ -207,6 +200,15 @@
           {/if}
           
           {#if user}
+            {#if $isAdmin}
+              <Link 
+                to="/admin" 
+                class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
+                on:click={closeMenu}
+              >
+                Dashboard
+              </Link>
+            {/if}
             <Link 
               to="/profile" 
               class="font-medium py-2 px-4 rounded-md transition-colors duration-200 text-neutral-800 hover:bg-primary-50 hover:text-primary-600"
