@@ -224,7 +224,7 @@
         <div class="bg-white rounded-lg shadow-md">
           <div class="border-b border-neutral-200">
             <div class="flex justify-between items-center px-8 py-4">
-              <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+              <h1 class="text-2xl font-bold">Profile</h1>
               <button 
                 class="btn bg-red-600 hover:bg-red-700 text-white"
                 on:click={handleSignOut}
