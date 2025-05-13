@@ -321,6 +321,9 @@
                         class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                         required
                       />
+                      {#if formErrors.image}
+                        <p class="mt-1 text-sm text-red-600">{formErrors.image}</p>
+                      {/if}
                     </div>
                   </div>
                   <div>
