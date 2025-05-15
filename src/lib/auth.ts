@@ -9,9 +9,17 @@ export async function checkAdminStatus(userId: string) {
       .from('admins')
       .select('user_id')
       .eq('user_id', userId)
-      .maybeSingle();
+      .single();
       
-    if (error) throw error;
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // No rows found - user is not an admin
+        isAdmin.set(false);
+        localStorage.setItem('isAdmin', 'false');
+        return false;
+      }
+      throw error;
+    }
     
     const adminStatus = !!data;
     isAdmin.set(adminStatus);
