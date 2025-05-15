@@ -1,33 +1,12 @@
 <script lang="ts">
   import { cart, type CartItem } from '../lib/cart';
-  import { supabase } from '../lib/supabase';
+  import { navigate } from 'svelte-routing';
   
   let isLoading = false;
   let error = '';
   
-  async function checkout() {
-    try {
-      isLoading = true;
-      error = '';
-
-      const { data: { session_url }, error: checkoutError } = await supabase.functions.invoke('stripe-checkout', {
-        body: {
-          items: $cart.map(item => ({
-            price: item.stripePriceId,
-            quantity: item.quantity
-          }))
-        }
-      });
-
-      if (checkoutError) throw checkoutError;
-      
-      // Redirect to Stripe Checkout
-      window.location.href = session_url;
-    } catch (err) {
-      error = err instanceof Error ? err.message : 'An error occurred';
-    } finally {
-      isLoading = false;
-    }
+  function checkout() {
+    navigate('/checkout');
   }
   
   function updateQuantity(item: CartItem, newQuantity: number) {
