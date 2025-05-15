@@ -4,23 +4,21 @@
   import { slide } from "svelte/transition";
   import { supabase } from "../lib/supabase";
   import { isAdmin } from "../lib/auth";
+  import CartIcon from "./CartIcon.svelte";
   
   let scrolled = false;
   let mobileMenuOpen = false;
   let user: any = null;
   let profileDropdownOpen = false;
   
-  // Toggle mobile menu visibility
   function toggleMobileMenu() {
     mobileMenuOpen = !mobileMenuOpen;
   }
   
-  // Close mobile menu when clicking a link
   function closeMenu() {
     mobileMenuOpen = false;
   }
   
-  // Change header style on scroll
   function handleScroll() {
     scrolled = window.scrollY > 50;
   }
@@ -118,7 +116,7 @@
         {/if}
         
         {#if !$isAdmin}
-          <button class="btn btn-primary ml-4">Order Now</button>
+          <CartIcon />
         {/if}
       </nav>
       
@@ -218,7 +216,7 @@
           {/if}
           
           {#if !$isAdmin}
-            <button class="btn btn-primary w-full">Order Now</button>
+            <CartIcon />
           {/if}
         </div>
       </nav>
