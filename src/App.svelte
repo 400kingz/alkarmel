@@ -10,6 +10,7 @@
   import Admin from "./routes/Admin.svelte";
   import Login from "./routes/Login.svelte";
   import Profile from "./routes/Profile.svelte";
+  import Checkout from "./routes/Checkout.svelte";
 
   export let url = "";
 </script>
@@ -26,6 +27,7 @@
       <Route path="/admin" component={Admin} />
       <Route path="/login" component={Login} />
       <Route path="/profile" component={Profile} />
+      <Route path="/checkout" component={Checkout} />
     </main>
     <Footer />
   </div>
