@@ -1,12 +1,29 @@
 <script lang="ts">
+  import { cart } from '../lib/cart';
+  import type { CartItem } from '../lib/cart';
+
   export let product = {
-    id: 0,
+    id: "",
     name: "",
     category: "",
     image: "",
     description: "",
-    price: 0
+    price: 0,
+    stripe_price_id: ""
   };
+
+  function addToCart() {
+    const cartItem: CartItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: 1,
+      stripePriceId: product.stripe_price_id,
+      image: product.image
+    };
+    
+    cart.addItem(cartItem);
+  }
 </script>
 
 <div class="card group h-full flex flex-col">
@@ -28,6 +45,11 @@
   
   <div class="flex justify-between items-center mt-auto">
     <span class="text-xl font-bold text-primary-700">${product.price.toFixed(2)}</span>
-    <button class="btn btn-primary py-2 px-4 text-sm">Add to Cart</button>
+    <button 
+      class="btn btn-primary py-2 px-4 text-sm"
+      on:click={addToCart}
+    >
+      Add to Cart
+    </button>
   </div>
 </div>

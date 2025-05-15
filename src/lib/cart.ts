@@ -1,12 +1,12 @@
 import { writable } from 'svelte/store';
 
 export interface CartItem {
-  id: number;
+  id: string;
   name: string;
   price: number;
   quantity: number;
-  stripeProductId: string;
   stripePriceId: string;
+  image: string;
 }
 
 function createCart() {
@@ -25,8 +25,8 @@ function createCart() {
       }
       return [...items, { ...item, quantity: 1 }];
     }),
-    removeItem: (id: number) => update(items => items.filter(i => i.id !== id)),
-    updateQuantity: (id: number, quantity: number) => update(items =>
+    removeItem: (id: string) => update(items => items.filter(i => i.id !== id)),
+    updateQuantity: (id: string, quantity: number) => update(items =>
       items.map(i => i.id === id ? { ...i, quantity } : i)
     ),
     clear: () => set([]),

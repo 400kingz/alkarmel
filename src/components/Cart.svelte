@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cart, type CartItem } from '../lib/cart';
-  import { stripe } from '../lib/stripe';
+  import { supabase } from '../lib/supabase';
   
   let isLoading = false;
   let error = '';
@@ -9,34 +9,20 @@
     try {
       isLoading = true;
       error = '';
-      
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+
+      const { data: { session_url }, error: checkoutError } = await supabase.functions.invoke('stripe-checkout', {
+        body: {
           items: $cart.map(item => ({
             price: item.stripePriceId,
             quantity: item.quantity
           }))
-        })
+        }
       });
-      
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      
-      const { sessionId } = await response.json();
+
+      if (checkoutError) throw checkoutError;
       
       // Redirect to Stripe Checkout
-      const result = await stripe?.redirectToCheckout({
-        sessionId
-      });
-      
-      if (result?.error) {
-        throw new Error(result.error.message);
-      }
+      window.location.href = session_url;
     } catch (err) {
       error = err instanceof Error ? err.message : 'An error occurred';
     } finally {
@@ -62,21 +48,28 @@
     <div class="space-y-4">
       {#each $cart as item}
         <div class="flex items-center justify-between border-b pb-4">
-          <div>
-            <h3 class="font-medium">{item.name}</h3>
-            <p class="text-neutral-600">${item.price.toFixed(2)}</p>
+          <div class="flex items-center">
+            <img 
+              src={item.image} 
+              alt={item.name} 
+              class="w-16 h-16 object-cover rounded-lg mr-4"
+            />
+            <div>
+              <h3 class="font-medium">{item.name}</h3>
+              <p class="text-neutral-600">${item.price.toFixed(2)}</p>
+            </div>
           </div>
           <div class="flex items-center space-x-4">
             <div class="flex items-center space-x-2">
               <button 
-                class="text-neutral-600 hover:text-primary-600"
+                class="text-neutral-600 hover:text-primary-600 w-8 h-8 flex items-center justify-center rounded-full bg-neutral-100"
                 on:click={() => updateQuantity(item, item.quantity - 1)}
               >
                 -
               </button>
-              <span>{item.quantity}</span>
+              <span class="w-8 text-center">{item.quantity}</span>
               <button 
-                class="text-neutral-600 hover:text-primary-600"
+                class="text-neutral-600 hover:text-primary-600 w-8 h-8 flex items-center justify-center rounded-full bg-neutral-100"
                 on:click={() => updateQuantity(item, item.quantity + 1)}
               >
                 +
